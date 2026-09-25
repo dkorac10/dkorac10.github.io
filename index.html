@@ -1,826 +1,473 @@
 <!DOCTYPE html>
-<html lang="de" class="dark scroll-smooth">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deivid Korac | Portfolio & BTS Cloud Computing</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkbg: '#0a0d14',
-                        cardbg: 'rgba(17, 24, 39, 0.7)',
-                        accent: {
-                            blue: '#38bdf8',
-                            indigo: '#818cf8',
-                            emerald: '#34d399',
-                            purple: '#a855f7'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'JetBrains Mono', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Fonts & FontAwesome Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0d14;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-        
-        .code-font {
-            font-family: 'Fira Code', monospace;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="meta.title">Deivid Korac — Cloud Infrastructure</title>
+<meta name="description" content="Portfolio von Deivid Korac, BTS Cloud Computing am LGK, Luxemburg." data-i18n-attr="meta.desc">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F5F1;
+    --panel:#FFFFFF;
+    --ink:#14201C;
+    --ink-dim:#5B6864;
+    --line:#DEDCD3;
+    --ok:#1E8E5A;
+    --ok-dim:#E4F3EA;
+    --ok-line:#C7E6D3;
+    --dev:#B8860B;
+    --dev-dim:#F6EEDA;
+    --serif:'Fraunces', Georgia, serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  :root[data-theme="dark"]{
+    --paper:#111613;
+    --panel:#171D19;
+    --ink:#ECEEE9;
+    --ink-dim:#8C978F;
+    --line:#2A322D;
+    --ok:#3FCB86;
+    --ok-dim:rgba(63,203,134,0.12);
+    --ok-line:rgba(63,203,134,0.3);
+    --dev:#E3B94E;
+    --dev-dim:rgba(227,185,78,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--mono); font-size:14px;
+    display:grid; grid-template-columns:248px 1fr;
+    min-height:100vh;
+    transition:background .2s ease, color .2s ease;
+  }
+  @media(max-width:860px){ body{display:block;} }
 
-        /* Glassmorphism Styling */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
+  .rail{
+    position:sticky; top:0; height:100vh; padding:28px 26px;
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column;
+  }
+  @media(max-width:860px){
+    .rail{position:static; height:auto; border-right:none; border-bottom:1px solid var(--line);}
+  }
+  .rail-top{display:flex; align-items:center; gap:10px;}
+  .mark{
+    width:34px; height:34px; border:1px solid var(--ink); border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-weight:600; font-size:14px;
+  }
+  .rail-top span.name{font-size:13px; letter-spacing:0.01em;}
+  .status-line{margin-top:16px; display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--ink-dim);}
+  .pulse{
+    width:7px; height:7px; border-radius:50%; background:var(--ok); flex:none;
+    box-shadow:0 0 0 0 rgba(30,142,90,.5); animation:pulse 2.2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(30,142,90,.45);}
+    70%{box-shadow:0 0 0 6px rgba(30,142,90,0);}
+    100%{box-shadow:0 0 0 0 rgba(30,142,90,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .pulse{animation:none;} }
 
-        .glass-card:hover {
-            border-color: rgba(56, 189, 248, 0.3);
-            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.15);
-        }
+  .rail-nav{margin-top:40px; display:flex; flex-direction:column; gap:2px;}
+  .rail-nav a{text-decoration:none; color:var(--ink-dim); font-size:12.5px; padding:8px 0; display:flex; gap:10px;}
+  .rail-nav a:hover{color:var(--ink);}
+  .rail-nav a b{color:var(--ink-dim); font-weight:500;}
 
-        .glass-nav {
-            background: rgba(10, 13, 20, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+  .rail-controls{margin-top:36px; display:flex; flex-direction:column; gap:14px;}
+  .lang-switch{display:flex; gap:6px;}
+  .lang-switch button{
+    font-family:var(--mono); font-size:11px; color:var(--ink-dim);
+    background:transparent; border:1px solid var(--line); border-radius:4px;
+    padding:5px 9px; cursor:pointer; transition:all .15s ease;
+  }
+  .lang-switch button:hover{color:var(--ink); border-color:var(--ink-dim);}
+  .lang-switch button.active{color:var(--paper); background:var(--ink); border-color:var(--ink);}
+  .theme-toggle{
+    display:flex; align-items:center; gap:8px; align-self:flex-start;
+    font-family:var(--mono); font-size:11px; color:var(--ink-dim);
+    background:transparent; border:1px solid var(--line); border-radius:20px;
+    padding:6px 12px; cursor:pointer; transition:all .15s ease;
+  }
+  .theme-toggle:hover{color:var(--ink); border-color:var(--ink-dim);}
+  .theme-toggle .glyph{font-size:12px; line-height:1;}
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0d14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #38bdf8;
-        }
+  .rail-bottom{margin-top:auto; font-size:11px; color:var(--ink-dim); line-height:1.6;}
+  .rail-bottom a{color:var(--ink-dim); text-decoration:underline; text-decoration-color:var(--line);}
 
-        /* Glowing Effects */
-        .glow-effect {
-            position: relative;
-        }
-        .glow-effect::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, #38bdf8, #818cf8, #34d399, #a855f7);
-            border-radius: inherit;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            filter: blur(10px);
-        }
-        .glow-effect:hover::before {
-            opacity: 0.6;
-        }
+  main{padding:0 0 60px;}
+  .col{max-width:760px; padding:0 48px;}
+  @media(max-width:640px){.col{padding:0 22px;}}
 
-        /* Typing Cursor Effect */
-        .typing-cursor::after {
-            content: '|';
-            animation: blink 1s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-    </style>
+  .hero{padding:64px 0 54px; border-bottom:1px solid var(--line);}
+  .banner{
+    display:inline-flex; align-items:center; gap:8px; font-size:11.5px; color:var(--ok);
+    background:var(--ok-dim); border:1px solid var(--ok-line); padding:6px 12px; border-radius:20px; margin-bottom:28px;
+  }
+  .banner .pulse{background:var(--ok);}
+  h1{
+    font-family:var(--serif); font-weight:600; letter-spacing:-0.01em;
+    font-size:clamp(34px,4.6vw,50px); line-height:1.08; max-width:15ch;
+  }
+  .role{margin-top:14px; font-size:14px; color:var(--ink-dim);}
+  .hero p.lede{margin-top:22px; font-size:14.5px; color:var(--ink-dim); max-width:52ch; line-height:1.7; font-family:var(--mono);}
+
+  section{padding:54px 0; border-bottom:1px solid var(--line);}
+  .sec-tag{font-size:11.5px; color:var(--ink-dim); margin-bottom:10px;}
+  h2{font-family:var(--serif); font-weight:600; font-size:24px; margin-bottom:30px;}
+
+  .uptime-item + .uptime-item{margin-top:30px;}
+  .uptime-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap;}
+  .uptime-head h3{font-family:var(--serif); font-weight:600; font-size:16.5px;}
+  .uptime-head .period{font-size:11.5px; color:var(--ink-dim);}
+  .uptime-bar{margin-top:10px; display:flex; gap:2px; height:18px;}
+  .uptime-bar i{flex:1; background:var(--ok); border-radius:1px; opacity:0.85;}
+  .uptime-bar i:nth-child(7n){opacity:0.55;}
+  .uptime-note{margin-top:10px; font-size:13px; color:var(--ink-dim); max-width:54ch; line-height:1.6;}
+
+  .svc{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:20px 22px; margin-bottom:14px; transition:background .2s ease;}
+  .svc-top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+  .svc-name{display:flex; align-items:center; gap:10px;}
+  .svc-name h3{font-family:var(--serif); font-weight:600; font-size:16.5px;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--ok); flex:none;}
+  .dot.dev{background:var(--dev);}
+  .svc-status{font-size:11px; padding:3px 9px; border-radius:20px; background:var(--ok-dim); color:var(--ok);}
+  .svc-status.dev{background:var(--dev-dim); color:var(--dev);}
+  .svc p.desc{margin-top:12px; font-size:13.5px; color:var(--ink-dim); max-width:56ch; line-height:1.65;}
+  .svc .tag-row{margin-top:14px; display:flex; flex-wrap:wrap; gap:6px;}
+  .tag{font-size:11px; color:var(--ink-dim); border:1px solid var(--line); border-radius:4px; padding:3px 8px;}
+  .svc .links{margin-top:14px; display:flex; gap:16px;}
+  .svc .links a{font-size:12px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line);}
+  .svc .links a:hover{border-color:var(--ink);}
+
+  .stack-matrix{display:grid; grid-template-columns:140px 1fr; gap:16px 20px;}
+  @media(max-width:560px){.stack-matrix{grid-template-columns:1fr;}}
+  .stack-matrix .k{font-size:11.5px; color:var(--ink-dim); padding-top:3px;}
+  .stack-matrix .v{display:flex; flex-wrap:wrap; gap:6px;}
+  .stack-row{display:contents;}
+  .stack-row + .stack-row .k, .stack-row + .stack-row .v{border-top:1px solid var(--line); padding-top:16px;}
+
+  .contact-box{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:36px; display:flex; justify-content:space-between; gap:28px; flex-wrap:wrap; transition:background .2s ease;
+  }
+  .contact-box p{font-size:14px; color:var(--ink-dim); max-width:36ch; line-height:1.7;}
+  .contact-links{display:flex; flex-direction:column; gap:10px; font-size:13px;}
+  .contact-links a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line);}
+  .contact-links a:hover{border-color:var(--ink);}
+
+  footer{padding:26px 48px; font-size:11px; color:var(--ink-dim); display:flex; justify-content:space-between;}
+  @media(max-width:640px){footer{padding:20px 22px; flex-direction:column; gap:6px;}}
+</style>
 </head>
-<body class="selection:bg-sky-500/30 selection:text-sky-200">
+<body>
 
-    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Brand / Logo -->
-                <a href="#hero" class="flex items-center space-x-2 text-sky-400 font-bold code-font text-lg tracking-wider group">
-                    <span class="text-emerald-400 group-hover:rotate-12 transition-transform duration-300">&gt;</span>
-                    <span class="text-white group-hover:text-sky-400 transition-colors">deivid_korac</span>
-                    <span class="text-xs px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">v2.0</span>
-                </a>
+<div class="rail">
+  <div class="rail-top">
+    <div class="mark">DK</div>
+    <span class="name">Deivid Korac</span>
+  </div>
+  <div class="status-line"><span class="pulse"></span> <span data-i18n="status.learning">lernt gerade — BTS Cloud Computing</span></div>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                    <a href="#about" class="text-gray-300 hover:text-sky-400 transition-colors flex items-center space-x-1.5">
-                        <span class="text-sky-400 code-font">01.</span><span>Über mich</span>
-                    </a>
-                    <a href="#education" class="text-gray-300 hover:text-sky-400 transition-colors flex items-center space-x-1.5">
-                        <span class="text-sky-400 code-font">02.</span><span>Ausbildung</span>
-                    </a>
-                    <a href="#skills" class="text-gray-300 hover:text-sky-400 transition-colors flex items-center space-x-1.5">
-                        <span class="text-sky-400 code-font">03.</span><span>Skills</span>
-                    </a>
-                    <a href="#projects" class="text-gray-300 hover:text-sky-400 transition-colors flex items-center space-x-1.5">
-                        <span class="text-sky-400 code-font">04.</span><span>Projekte</span>
-                    </a>
-                    <a href="#terminal" class="text-gray-300 hover:text-sky-400 transition-colors flex items-center space-x-1.5">
-                        <span class="text-emerald-400 code-font">&gt;_</span><span>CLI</span>
-                    </a>
-                    <a href="#contact" class="px-4 py-2 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 transition-all font-mono text-xs">
-                        Kontakt
-                    </a>
-                </nav>
+  <nav class="rail-nav">
+    <a href="#profile"><b>01</b> <span data-i18n="nav.profile">Profil</span></a>
+    <a href="#uptime"><b>02</b> <span data-i18n="nav.uptime">Werdegang</span></a>
+    <a href="#services"><b>03</b> <span data-i18n="nav.services">Projekte</span></a>
+    <a href="#stack"><b>04</b> <span data-i18n="nav.stack">Stack</span></a>
+    <a href="#contact"><b>05</b> <span data-i18n="nav.contact">Kontakt</span></a>
+  </nav>
 
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none" aria-label="Menu Toggle">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
+  <div class="rail-controls">
+    <div class="lang-switch" role="group" aria-label="Sprache">
+      <button type="button" data-lang="de">DE</button>
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+    <button type="button" class="theme-toggle" id="themeToggle">
+      <span class="glyph">☾</span> <span data-i18n="theme.toggle">Dunkelmodus</span>
+    </button>
+  </div>
+
+  <div class="rail-bottom">
+    Esch-sur-Alzette, LU<br>
+    <a href="#contact" data-i18n="rail.contactLink">Kontakt aufnehmen ↗</a>
+  </div>
+</div>
+
+<main>
+  <section class="hero" id="profile">
+    <div class="col">
+      <div class="banner"><span class="pulse"></span> <span data-i18n="hero.banner">Alle Systeme in Ausbildung — verfügbar für Praktika</span></div>
+      <h1 data-i18n="hero.h1">Infrastruktur, die man nicht bemerkt, weil sie einfach läuft.</h1>
+      <div class="role" data-i18n="hero.role">Deivid Korac — Cloud Computing, Luxemburg</div>
+      <p class="lede" data-i18n="hero.lede">Ich beschäftige mich mit dem, was hinter jeder Anwendung liegt: Server, Netzwerke, Virtualisierung und Cloud-Plattformen. Aktuell im BTS Cloud Computing am LGK, nach vier Jahren Informatique am selben Lycée.</p>
+    </div>
+  </section>
+
+  <section id="uptime">
+    <div class="col">
+      <div class="sec-tag" data-i18n="uptime.sectag">02 — Werdegang</div>
+      <h2 data-i18n="uptime.h2">Ausbildungs-Uptime</h2>
+
+      <div class="uptime-item">
+        <div class="uptime-head">
+          <h3>BTS Cloud Computing — LGK</h3>
+          <span class="period" data-i18n="uptime.item1.period">laufend</span>
         </div>
-
-        <!-- Mobile Drawer Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-slate-800 px-4 pt-2 pb-6 space-y-3">
-            <a href="#about" class="block text-gray-300 hover:text-sky-400 py-2 code-font text-sm">01. Über mich</a>
-            <a href="#education" class="block text-gray-300 hover:text-sky-400 py-2 code-font text-sm">02. Ausbildung</a>
-            <a href="#skills" class="block text-gray-300 hover:text-sky-400 py-2 code-font text-sm">03. Skills</a>
-            <a href="#projects" class="block text-gray-300 hover:text-sky-400 py-2 code-font text-sm">04. Projekte</a>
-            <a href="#terminal" class="block text-emerald-400 hover:text-emerald-300 py-2 code-font text-sm">&gt;_ Terminal CLI</a>
-            <a href="#contact" class="block text-center py-2 mt-2 rounded bg-sky-500/20 text-sky-400 font-mono text-sm border border-sky-500/30">Kontakt</a>
+        <div class="uptime-bar">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
-    </header>
+        <p class="uptime-note" data-i18n="uptime.item1.note">Vertiefung in Cloud-Architektur, Systemadministration, Netzwerken und Virtualisierung — von der Planung bis zum laufenden Betrieb.</p>
+      </div>
 
-    <section id="hero" class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
-        <!-- Background Ambient Glow -->
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-10 right-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-4xl w-full mx-auto space-y-8 text-center md:text-left relative z-10">
-            <!-- Status Badge -->
-            <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-xs font-mono text-gray-300 shadow-inner">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span>Offen für Cloud & Infrastructure Projekte / Praktika</span>
-            </div>
-
-            <!-- Main Intro Header -->
-            <div class="space-y-4">
-                <h2 class="text-sky-400 code-font text-sm md:text-base font-semibold tracking-wider uppercase">
-                    Hallo, mein Name ist
-                </h2>
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight">
-                    Deivid Korac<span class="text-sky-400">.</span>
-                </h1>
-                <!-- Dynamic Typing Tagline -->
-                <div class="text-xl sm:text-3xl text-gray-400 font-medium h-12 flex items-center justify-center md:justify-start code-font">
-                    <span id="typed-text" class="text-slate-200"></span><span class="typing-cursor text-sky-400"></span>
-                </div>
-            </div>
-
-            <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed font-normal mx-auto md:mx-0">
-                19-jähriger IT-Enthusiast aus Luxemburg. Mit einer fundierten 4-jährigen Ausbildung als 
-                <span class="text-sky-300 font-medium">Informatiktechniker (LGK)</span> und aktuellem Studium im 
-                <span class="text-sky-300 font-medium">BTS Cloud Computing (1. Jahr)</span> fokussiere ich mich auf skalierbare Cloud-Infrastrukturen, Systemadministration & Automatisierung.
-            </p>
-
-            <!-- Quick Action Buttons -->
-            <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-4">
-                <a href="#projects" class="px-6 py-3 rounded-lg bg-sky-500 text-slate-950 font-semibold hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/20 flex items-center space-x-2 text-sm">
-                    <i class="fa-solid fa-code"></i>
-                    <span>Projekte ansehen</span>
-                </a>
-                <a href="https://github.com" target="_blank" class="px-6 py-3 rounded-lg glass-card hover:bg-slate-800/80 text-white font-medium transition-all flex items-center space-x-2 text-sm">
-                    <i class="fa-brands fa-github text-lg"></i>
-                    <span>GitHub Profil</span>
-                </a>
-                <a href="#terminal" class="px-4 py-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-emerald-400 font-mono text-xs transition-all flex items-center space-x-2">
-                    <i class="fa-solid fa-terminal"></i>
-                    <span>$ launch_cli</span>
-                </a>
-            </div>
-
-            <!-- Quick Metrics Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8 max-w-2xl border-t border-slate-800/60">
-                <div class="glass-card p-4 rounded-xl text-center md:text-left">
-                    <div class="text-2xl font-bold text-sky-400 code-font">4 Jahre</div>
-                    <div class="text-xs text-gray-400 mt-1">LGK Techniker (IT)</div>
-                </div>
-                <div class="glass-card p-4 rounded-xl text-center md:text-left">
-                    <div class="text-2xl font-bold text-indigo-400 code-font">1. Jahr</div>
-                    <div class="text-xs text-gray-400 mt-1">BTS Cloud Computing</div>
-                </div>
-                <div class="glass-card p-4 rounded-xl text-center md:text-left col-span-2 sm:col-span-1">
-                    <div class="text-2xl font-bold text-emerald-400 code-font">19 Jahre</div>
-                    <div class="text-xs text-gray-400 mt-1">Alter & Motivation</div>
-                </div>
-            </div>
+      <div class="uptime-item">
+        <div class="uptime-head">
+          <h3>Informatique — Lycée Guillaume Kroll</h3>
+          <span class="period" data-i18n="uptime.item2.period">4 Jahre — abgeschlossen</span>
         </div>
-    </section>
-
-    <section id="about" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div class="flex items-center space-x-4 mb-12">
-            <span class="text-sky-400 code-font text-xl">01.</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Über mich</h2>
-            <div class="h-px bg-slate-800 flex-grow max-w-xs"></div>
+        <div class="uptime-bar">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
+        <p class="uptime-note" data-i18n="uptime.item2.note">Technische Grundausbildung in Informatik — Basis für die spätere Spezialisierung auf Cloud- und Infrastrukturthemen.</p>
+      </div>
+    </div>
+  </section>
 
-        <div class="grid md:grid-cols-3 gap-8 items-start">
-            <!-- Bio Box -->
-            <div class="md:col-span-2 glass-card p-6 sm:p-8 rounded-2xl space-y-4 leading-relaxed text-gray-300">
-                <p>
-                    Schon früh hat mich die Funktionsweise von Netzwerken, Serverarchitekturen und Systemen fasziniert. Im <span class="text-white font-semibold">Lycée Guillaume Kroll (LGK)</span> habe ich im Zuge der 4-jährigen Ausbildung zum Informatiktechniker ein breites Praxiswissen aufgebaut – von Hardware-Assemblierung über Cisco-Netzwerke bis hin zur Administration von Linux- & Windows-Servern.
-                </p>
-                <p>
-                    Aktuell vertiefe ich mein Wissen im <span class="text-white font-semibold">1. Jahr des BTS Cloud Computing</span>. Hier beschäftige ich mich intensiv mit moderner Cloud-Architektur, Virtualisierung, DevOps-Grundlagen (Docker/Kubernetes), Infrastructure as Code und Automatisierungsskripten.
-                </p>
-                <p>
-                    Mein Ziel ist es, hochverfügbare, sichere und performante Cloud-Infrastrukturen zu entwickeln und stetig neue Technologien zu meistern.
-                </p>
+  <section id="services">
+    <div class="col">
+      <div class="sec-tag" data-i18n="services.sectag">03 — Ausgewählte Projekte</div>
+      <h2 data-i18n="services.h2">Services im Aufbau</h2>
 
-                <!-- Core Focus Badges -->
-                <div class="pt-4 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono">Cloud Architectures</span>
-                    <span class="px-3 py-1 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-mono">Linux & System Admin</span>
-                    <span class="px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono">Networking (CCNA Core)</span>
-                    <span class="px-3 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-mono">Virtualisierung</span>
-                </div>
-            </div>
-
-            <!-- Info Card / Quick Specs -->
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <h3 class="text-lg font-bold text-white border-b border-slate-800 pb-3 flex items-center justify-between">
-                    <span>Quick Specs</span>
-                    <i class="fa-solid fa-microchip text-sky-400"></i>
-                </h3>
-                
-                <ul class="space-y-4 text-sm font-mono">
-                    <li class="flex justify-between items-center">
-                        <span class="text-gray-400">Name:</span>
-                        <span class="text-white font-medium">Deivid Korac</span>
-                    </li>
-                    <li class="flex justify-between items-center">
-                        <span class="text-gray-400">Alter:</span>
-                        <span class="text-white font-medium">19 Jahre</span>
-                    </li>
-                    <li class="flex justify-between items-center">
-                        <span class="text-gray-400">Standort:</span>
-                        <span class="text-white font-medium">Luxemburg</span>
-                    </li>
-                    <li class="flex justify-between items-center">
-                        <span class="text-gray-400">Status:</span>
-                        <span class="text-emerald-400 font-medium">BTS Student</span>
-                    </li>
-                    <li class="flex justify-between items-center">
-                        <span class="text-gray-400">Sprachen:</span>
-                        <span class="text-white font-medium">LU, DE, EN, FR</span>
-                    </li>
-                </ul>
-
-                <div class="pt-2 border-t border-slate-800">
-                    <a href="#contact" class="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-mono text-xs text-center block transition-colors">
-                        &gt; contact_me.sh
-                    </a>
-                </div>
-            </div>
+      <div class="svc">
+        <div class="svc-top">
+          <div class="svc-name"><span class="dot dev"></span><h3 data-i18n="svc.titlePlaceholder">Projekttitel eintragen</h3></div>
+          <span class="svc-status dev" data-i18n="svc.statusDev">in Entwicklung</span>
         </div>
-    </section>
+        <p class="desc" data-i18n="svc.descPlaceholder">Kurzbeschreibung: was das Projekt macht, welches Problem es löst und in welchem Rahmen es entstanden ist.</p>
+        <div class="tag-row"><span class="tag" data-i18n="svc.tool">Tool</span><span class="tag" data-i18n="svc.tool">Tool</span><span class="tag" data-i18n="svc.tool">Tool</span></div>
+        <div class="links"><a href="#" data-i18n="svc.linkDetails">Details →</a><a href="#" data-i18n="svc.linkSource">Quellcode ↗</a></div>
+      </div>
 
-    <section id="education" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div class="flex items-center space-x-4 mb-12">
-            <span class="text-sky-400 code-font text-xl">02.</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Ausbildung & Werdegang</h2>
-            <div class="h-px bg-slate-800 flex-grow max-w-xs"></div>
+      <div class="svc">
+        <div class="svc-top">
+          <div class="svc-name"><span class="dot dev"></span><h3 data-i18n="svc.titlePlaceholder">Projekttitel eintragen</h3></div>
+          <span class="svc-status dev" data-i18n="svc.statusDev">in Entwicklung</span>
         </div>
+        <p class="desc" data-i18n="svc.descPlaceholder">Kurzbeschreibung: was das Projekt macht, welches Problem es löst und in welchem Rahmen es entstanden ist.</p>
+        <div class="tag-row"><span class="tag" data-i18n="svc.tool">Tool</span><span class="tag" data-i18n="svc.tool">Tool</span><span class="tag" data-i18n="svc.tool">Tool</span></div>
+        <div class="links"><a href="#" data-i18n="svc.linkDetails">Details →</a><a href="#" data-i18n="svc.linkSource">Quellcode ↗</a></div>
+      </div>
 
-        <div class="relative border-l-2 border-slate-800 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
-            
-            <!-- Timeline Item 2: BTS Cloud Computing -->
-            <div class="relative group">
-                <!-- Timeline Dot -->
-                <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-5 h-5 rounded-full bg-slate-900 border-2 border-sky-400 group-hover:scale-125 group-hover:bg-sky-400 transition-all duration-300 shadow-lg shadow-sky-500/50"></div>
-                
-                <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-3">
-                    <div class="flex flex-wrap items-center justify-between gap-2">
-                        <span class="px-3 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono font-semibold">
-                            2024 – Present (1. Jahr)
-                        </span>
-                        <span class="text-xs text-gray-400 font-mono"><i class="fa-solid fa-location-dot mr-1"></i>Luxemburg</span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-white">BTS Cloud Computing</h3>
-                    <h4 class="text-sky-400 text-sm font-medium">Höhere Berufsausbildung (Brevet de Technicien Supérieur)</h4>
-
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        Fokus auf moderne Cloud-Infrastrukturen, Deployment-Modelle (IaaS, PaaS, SaaS), Virtualisierung, Containerisierung und DevOps-Workflows.
-                    </p>
-
-                    <div class="pt-2">
-                        <div class="text-xs font-mono text-gray-400 mb-2">Schwerpunkte & Module:</div>
-                        <ul class="grid sm:grid-cols-2 gap-2 text-xs text-gray-300 font-mono">
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-sky-400"></i><span>Cloud Architecture & Security</span></li>
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-sky-400"></i><span>Docker & Virtualisierung</span></li>
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-sky-400"></i><span>Linux Administration & Scripting</span></li>
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-sky-400"></i><span>Network Engineering & Protocols</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Timeline Item 1: LGK Techniker -->
-            <div class="relative group">
-                <!-- Timeline Dot -->
-                <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-5 h-5 rounded-full bg-slate-900 border-2 border-indigo-400 group-hover:scale-125 group-hover:bg-indigo-400 transition-all duration-300"></div>
-                
-                <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-3">
-                    <div class="flex flex-wrap items-center justify-between gap-2">
-                        <span class="px-3 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-mono font-semibold">
-                            2020 – 2024 (4 Jahre)
-                        </span>
-                        <span class="text-xs text-gray-400 font-mono"><i class="fa-solid fa-building-columns mr-1"></i>Lycée Guillaume Kroll (LGK)</span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-white">Informatiktechniker (Diplôme de Technicien)</h3>
-                    <h4 class="text-indigo-400 text-sm font-medium">LGK Esch-sur-Alzette</h4>
-
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        Umfassende 4-jährige technische Ausbildung. Praktische und theoretische Grundlagen in IT-Support, Hardware, Netzwerken und Serveradministration.
-                    </p>
-
-                    <div class="pt-2">
-                        <div class="text-xs font-mono text-gray-400 mb-2">Kernerfahrungen:</div>
-                        <ul class="grid sm:grid-cols-2 gap-2 text-xs text-gray-300 font-mono">
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-indigo-400"></i><span>Netzwerk-Routing & Switching</span></li>
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-indigo-400"></i><span>Hardware & Systemdiagnose</span></li>
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-indigo-400"></i><span>Active Directory & Windows Server</span></li>
-                            <li class="flex items-center space-x-2"><i class="fa-solid fa-angle-right text-indigo-400"></i><span>IT Support & Troubleshooting</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+      <div class="svc">
+        <div class="svc-top">
+          <div class="svc-name"><span class="dot dev"></span><h3 data-i18n="svc.titlePlaceholder">Projekttitel eintragen</h3></div>
+          <span class="svc-status dev" data-i18n="svc.statusDev">in Entwicklung</span>
         </div>
-    </section>
+        <p class="desc" data-i18n="svc.descPlaceholder">Kurzbeschreibung: was das Projekt macht, welches Problem es löst und in welchem Rahmen es entstanden ist.</p>
+        <div class="tag-row"><span class="tag" data-i18n="svc.tool">Tool</span><span class="tag" data-i18n="svc.tool">Tool</span><span class="tag" data-i18n="svc.tool">Tool</span></div>
+        <div class="links"><a href="#" data-i18n="svc.linkDetails">Details →</a><a href="#" data-i18n="svc.linkSource">Quellcode ↗</a></div>
+      </div>
+    </div>
+  </section>
 
-    <section id="skills" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div class="flex items-center space-x-4 mb-12">
-            <span class="text-sky-400 code-font text-xl">03.</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Technische Skills</h2>
-            <div class="h-px bg-slate-800 flex-grow max-w-xs"></div>
+  <section id="stack">
+    <div class="col">
+      <div class="sec-tag" data-i18n="stack.sectag">04 — Skills &amp; Tools</div>
+      <h2 data-i18n="stack.h2">Stack</h2>
+      <div class="stack-matrix">
+        <div class="stack-row">
+          <div class="k" data-i18n="stack.cloud">Cloud</div>
+          <div class="v"><span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">Proxmox</span></div>
         </div>
-
-        <!-- Category Tabs -->
-        <div class="flex flex-wrap gap-2 mb-8" id="skill-tabs">
-            <button onclick="filterSkills('all')" class="skill-tab active px-4 py-2 rounded-lg text-xs font-mono bg-sky-500/20 text-sky-400 border border-sky-500/30 transition-all">
-                Alle
-            </button>
-            <button onclick="filterSkills('cloud')" class="skill-tab px-4 py-2 rounded-lg text-xs font-mono bg-slate-900 text-gray-400 border border-slate-800 hover:text-white transition-all">
-                Cloud & Virtualisierung
-            </button>
-            <button onclick="filterSkills('networking')" class="skill-tab px-4 py-2 rounded-lg text-xs font-mono bg-slate-900 text-gray-400 border border-slate-800 hover:text-white transition-all">
-                Systeme & Netzwerke
-            </button>
-            <button onclick="filterSkills('tools')" class="skill-tab px-4 py-2 rounded-lg text-xs font-mono bg-slate-900 text-gray-400 border border-slate-800 hover:text-white transition-all">
-                Tools & Skripte
-            </button>
+        <div class="stack-row">
+          <div class="k" data-i18n="stack.systems">Systeme</div>
+          <div class="v"><span class="tag">Linux</span><span class="tag">Windows Server</span><span class="tag">Active Directory</span></div>
         </div>
-
-        <!-- Skills Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="skills-container">
-            
-            <!-- Skill 1 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="cloud">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-brands fa-aws text-orange-400 text-lg"></i>
-                        <span>AWS & Cloud Fundamentals</span>
-                    </span>
-                    <span class="text-xs font-mono text-sky-400">BTS Modul</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-sky-400 h-full rounded-full" style="width: 75%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 2 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="cloud">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-brands fa-docker text-sky-400 text-lg"></i>
-                        <span>Docker / Container</span>
-                    </span>
-                    <span class="text-xs font-mono text-sky-400">Gelernt</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-sky-400 h-full rounded-full" style="width: 70%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 3 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="networking">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-brands fa-linux text-yellow-400 text-lg"></i>
-                        <span>Linux System Administration</span>
-                    </span>
-                    <span class="text-xs font-mono text-emerald-400">Fortgeschritten</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-emerald-400 h-full rounded-full" style="width: 85%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 4 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="networking">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-solid fa-network-wired text-indigo-400 text-lg"></i>
-                        <span>Networking (Cisco, Routing/Switching)</span>
-                    </span>
-                    <span class="text-xs font-mono text-indigo-400">4 Jahre LGK</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-indigo-400 h-full rounded-full" style="width: 85%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 5 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="tools">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-solid fa-terminal text-emerald-400 text-lg"></i>
-                        <span>Bash / Shell Scripting</span>
-                    </span>
-                    <span class="text-xs font-mono text-emerald-400">Skripting</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-emerald-400 h-full rounded-full" style="width: 80%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 6 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="tools">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-brands fa-python text-blue-400 text-lg"></i>
-                        <span>Python Basics</span>
-                    </span>
-                    <span class="text-xs font-mono text-sky-400">Automatisierung</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-sky-400 h-full rounded-full" style="width: 65%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 7 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="networking">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-brands fa-windows text-blue-500 text-lg"></i>
-                        <span>Windows Server & Active Directory</span>
-                    </span>
-                    <span class="text-xs font-mono text-indigo-400">Solide</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-indigo-400 h-full rounded-full" style="width: 80%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 8 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="cloud">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-solid fa-server text-purple-400 text-lg"></i>
-                        <span>Proxmox / ESXi / VMware</span>
-                    </span>
-                    <span class="text-xs font-mono text-purple-400">Homelab & LGK</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-purple-400 h-full rounded-full" style="width: 78%"></div>
-                </div>
-            </div>
-
-            <!-- Skill 9 -->
-            <div class="skill-card glass-card p-5 rounded-xl space-y-3" data-category="tools">
-                <div class="flex justify-between items-center">
-                    <span class="text-white font-bold flex items-center space-x-2">
-                        <i class="fa-brands fa-git-alt text-red-500 text-lg"></i>
-                        <span>Git & GitHub Workflows</span>
-                    </span>
-                    <span class="text-xs font-mono text-emerald-400">Täglich</span>
-                </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-emerald-400 h-full rounded-full" style="width: 82%"></div>
-                </div>
-            </div>
-
+        <div class="stack-row">
+          <div class="k" data-i18n="stack.network">Netzwerk</div>
+          <div class="v"><span class="tag">TCP/IP</span><span class="tag">VLAN</span><span class="tag">VPN</span></div>
         </div>
-    </section>
-
-    <section id="projects" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div class="flex items-center space-x-4 mb-12">
-            <span class="text-sky-400 code-font text-xl">04.</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Projekte & Repositories</h2>
-            <div class="h-px bg-slate-800 flex-grow max-w-xs"></div>
+        <div class="stack-row">
+          <div class="k" data-i18n="stack.automation">Automatisierung</div>
+          <div class="v"><span class="tag">Bash</span><span class="tag">PowerShell</span><span class="tag">Docker</span><span class="tag">Git</span></div>
         </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <!-- Project Card 1 -->
-            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between text-gray-400">
-                        <i class="fa-regular fa-folder-open text-2xl text-sky-400 group-hover:text-sky-300 transition-colors"></i>
-                        <div class="flex items-center space-x-3 text-lg">
-                            <a href="https://github.com" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">Cloud Home Lab & Automation</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Aufbau und Konfiguration einer eigenen Virtualisierungsumgebung für Testzwecke im BTS Cloud Studium mit automatisiertem Container-Deployment.
-                    </p>
-                </div>
-                <div class="pt-6 flex flex-wrap gap-2 text-xs font-mono text-sky-400">
-                    <span>Docker</span> • <span>Proxmox</span> • <span>Linux</span> • <span>Bash</span>
-                </div>
-            </div>
-
-            <!-- Project Card 2 -->
-            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between text-gray-400">
-                        <i class="fa-regular fa-folder-open text-2xl text-indigo-400 group-hover:text-indigo-300 transition-colors"></i>
-                        <div class="flex items-center space-x-3 text-lg">
-                            <a href="https://github.com" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Network Infrastructure Setup</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Planung und Implementierung einer segmentierten Netzwerkarchitektur mit VLANs, Inter-VLAN Routing und Firewall-Regeln (LGK Techniker Projekt).
-                    </p>
-                </div>
-                <div class="pt-6 flex flex-wrap gap-2 text-xs font-mono text-indigo-400">
-                    <span>Cisco Packet Tracer</span> • <span>VLANs</span> • <span>Routing</span>
-                </div>
-            </div>
-
-            <!-- Project Card 3 -->
-            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between text-gray-400">
-                        <i class="fa-regular fa-folder-open text-2xl text-emerald-400 group-hover:text-emerald-300 transition-colors"></i>
-                        <div class="flex items-center space-x-3 text-lg">
-                            <a href="https://github.com" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">SysAdmin Shell Tools</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Eine Sammlung praktischer Bash-Skripte zur automatisierten Systemwartung, Log-Analyse und Backup-Erstellung auf Linux-Servern.
-                    </p>
-                </div>
-                <div class="pt-6 flex flex-wrap gap-2 text-xs font-mono text-emerald-400">
-                    <span>Bash</span> • <span>Cronjobs</span> • <span>Linux</span>
-                </div>
-            </div>
-
+        <div class="stack-row">
+          <div class="k" data-i18n="stack.languages">Sprachen</div>
+          <div class="v">
+            <span class="tag" data-i18n="stack.spoken.de">Deutsch</span>
+            <span class="tag" data-i18n="stack.spoken.fr">Französisch</span>
+            <span class="tag" data-i18n="stack.spoken.en">Englisch</span>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section id="terminal" class="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
-        <div class="flex items-center space-x-4 mb-8">
-            <span class="text-emerald-400 code-font text-xl">&gt;_</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Interactive CLI Terminal</h2>
-            <div class="h-px bg-slate-800 flex-grow max-w-xs"></div>
+  <section id="contact" style="border-bottom:none;">
+    <div class="col">
+      <div class="sec-tag" data-i18n="contact.sectag">05 — Kontakt</div>
+      <h2 data-i18n="contact.h2">Reden wir.</h2>
+      <div class="contact-box">
+        <p data-i18n="contact.p">Offen für Praktika, Werkstudentenstellen und Projekte im Bereich Cloud- und Netzwerkinfrastruktur. Eine kurze Nachricht reicht.</p>
+        <div class="contact-links">
+          <a href="mailto:deivid.korac@example.com">deivid.korac@example.com ↗</a>
+          <a href="https://github.com/deividkorac" target="_blank" rel="noopener">github.com/deividkorac ↗</a>
+          <a href="https://linkedin.com/in/deividkorac" target="_blank" rel="noopener">linkedin.com/in/deividkorac ↗</a>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden shadow-2xl code-font">
-            <!-- Terminal Header Bar -->
-            <div class="bg-slate-900 px-4 py-3 flex items-center justify-between border-b border-slate-800">
-                <div class="flex items-center space-x-2">
-                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
-                    <span class="text-xs text-gray-400 ml-2">deivid@korac-dev-shell:~</span>
-                </div>
-                <div class="text-xs text-gray-500 hidden sm:block">
-                    Tippe <span class="text-sky-400 font-bold">help</span> für Befehle
-                </div>
-            </div>
+  <footer>
+    <span>© 2026 Deivid Korac</span>
+    <span data-i18n="footer.hosted">Gehostet auf GitHub Pages</span>
+  </footer>
+</main>
 
-            <!-- Terminal Window Output -->
-            <div id="terminal-body" class="p-4 h-72 overflow-y-auto text-sm space-y-3 leading-relaxed text-slate-300">
-                <div>
-                    <span class="text-emerald-400 font-bold">deivid@portfolio:~$</span> Willkommen zur interaktiven Shell von Deivid Korac.
-                </div>
-                <div>
-                    Tippe <span class="text-sky-400">help</span> ein, um die verfügbaren Befehle anzuzeigen.
-                </div>
-            </div>
+<script>
+(function(){
+  var translations = {
+    de: {
+      "meta.title": "Deivid Korac — Cloud Infrastructure",
+      "meta.desc": "Portfolio von Deivid Korac, BTS Cloud Computing am LGK, Luxemburg.",
+      "status.learning": "lernt gerade — BTS Cloud Computing",
+      "nav.profile": "Profil", "nav.uptime": "Werdegang", "nav.services": "Projekte", "nav.stack": "Stack", "nav.contact": "Kontakt",
+      "theme.toggle": "Dunkelmodus", "theme.toggleLight": "Hellmodus",
+      "rail.contactLink": "Kontakt aufnehmen ↗",
+      "hero.banner": "Alle Systeme in Ausbildung — verfügbar für Praktika",
+      "hero.h1": "Infrastruktur, die man nicht bemerkt, weil sie einfach läuft.",
+      "hero.role": "Deivid Korac — Cloud Computing, Luxemburg",
+      "hero.lede": "Ich beschäftige mich mit dem, was hinter jeder Anwendung liegt: Server, Netzwerke, Virtualisierung und Cloud-Plattformen. Aktuell im BTS Cloud Computing am LGK, nach vier Jahren Informatique am selben Lycée.",
+      "uptime.sectag": "02 — Werdegang", "uptime.h2": "Ausbildungs-Uptime",
+      "uptime.item1.period": "laufend",
+      "uptime.item1.note": "Vertiefung in Cloud-Architektur, Systemadministration, Netzwerken und Virtualisierung — von der Planung bis zum laufenden Betrieb.",
+      "uptime.item2.period": "4 Jahre — abgeschlossen",
+      "uptime.item2.note": "Technische Grundausbildung in Informatik — Basis für die spätere Spezialisierung auf Cloud- und Infrastrukturthemen.",
+      "services.sectag": "03 — Ausgewählte Projekte", "services.h2": "Services im Aufbau",
+      "svc.titlePlaceholder": "Projekttitel eintragen", "svc.statusDev": "in Entwicklung",
+      "svc.descPlaceholder": "Kurzbeschreibung: was das Projekt macht, welches Problem es löst und in welchem Rahmen es entstanden ist.",
+      "svc.tool": "Tool", "svc.linkDetails": "Details →", "svc.linkSource": "Quellcode ↗",
+      "stack.sectag": "04 — Skills & Tools", "stack.h2": "Stack",
+      "stack.cloud": "Cloud", "stack.systems": "Systeme", "stack.network": "Netzwerk", "stack.automation": "Automatisierung", "stack.languages": "Sprachen",
+      "stack.spoken.de": "Deutsch", "stack.spoken.fr": "Französisch", "stack.spoken.en": "Englisch",
+      "contact.sectag": "05 — Kontakt", "contact.h2": "Reden wir.",
+      "contact.p": "Offen für Praktika, Werkstudentenstellen und Projekte im Bereich Cloud- und Netzwerkinfrastruktur. Eine kurze Nachricht reicht.",
+      "footer.hosted": "Gehostet auf GitHub Pages"
+    },
+    fr: {
+      "meta.title": "Deivid Korac — Infrastructure Cloud",
+      "meta.desc": "Portfolio de Deivid Korac, BTS Cloud Computing au LGK, Luxembourg.",
+      "status.learning": "en formation — BTS Cloud Computing",
+      "nav.profile": "Profil", "nav.uptime": "Parcours", "nav.services": "Projets", "nav.stack": "Stack", "nav.contact": "Contact",
+      "theme.toggle": "Mode sombre", "theme.toggleLight": "Mode clair",
+      "rail.contactLink": "Me contacter ↗",
+      "hero.banner": "Tous les systèmes en formation — disponible pour un stage",
+      "hero.h1": "Une infrastructure qu'on ne remarque pas, parce qu'elle fonctionne, tout simplement.",
+      "hero.role": "Deivid Korac — Cloud Computing, Luxembourg",
+      "hero.lede": "Je m'intéresse à ce qui se trouve derrière chaque application : serveurs, réseaux, virtualisation et plateformes cloud. Actuellement en BTS Cloud Computing au LGK, après quatre ans d'Informatique au même lycée.",
+      "uptime.sectag": "02 — Parcours", "uptime.h2": "Uptime de la formation",
+      "uptime.item1.period": "en cours",
+      "uptime.item1.note": "Approfondissement en architecture cloud, administration système, réseaux et virtualisation — de la planification à l'exploitation.",
+      "uptime.item2.period": "4 ans — terminé",
+      "uptime.item2.note": "Formation technique de base en informatique — le socle de la spécialisation ultérieure en cloud et infrastructure.",
+      "services.sectag": "03 — Projets sélectionnés", "services.h2": "Services en construction",
+      "svc.titlePlaceholder": "Titre du projet à compléter", "svc.statusDev": "en développement",
+      "svc.descPlaceholder": "Brève description : ce que fait le projet, quel problème il résout et dans quel cadre il a été réalisé.",
+      "svc.tool": "Outil", "svc.linkDetails": "Détails →", "svc.linkSource": "Code source ↗",
+      "stack.sectag": "04 — Compétences & outils", "stack.h2": "Stack",
+      "stack.cloud": "Cloud", "stack.systems": "Systèmes", "stack.network": "Réseau", "stack.automation": "Automatisation", "stack.languages": "Langues",
+      "stack.spoken.de": "Allemand", "stack.spoken.fr": "Français", "stack.spoken.en": "Anglais",
+      "contact.sectag": "05 — Contact", "contact.h2": "Discutons.",
+      "contact.p": "Ouvert aux stages, aux postes d'étudiant salarié et aux projets liés à l'infrastructure cloud et réseau. Un court message suffit.",
+      "footer.hosted": "Hébergé sur GitHub Pages"
+    },
+    en: {
+      "meta.title": "Deivid Korac — Cloud Infrastructure",
+      "meta.desc": "Portfolio of Deivid Korac, BTS Cloud Computing at LGK, Luxembourg.",
+      "status.learning": "currently studying — BTS Cloud Computing",
+      "nav.profile": "Profile", "nav.uptime": "Background", "nav.services": "Projects", "nav.stack": "Stack", "nav.contact": "Contact",
+      "theme.toggle": "Dark mode", "theme.toggleLight": "Light mode",
+      "rail.contactLink": "Get in touch ↗",
+      "hero.banner": "All systems in training — available for internships",
+      "hero.h1": "Infrastructure you don't notice, because it just works.",
+      "hero.role": "Deivid Korac — Cloud Computing, Luxembourg",
+      "hero.lede": "I work on what sits behind every application: servers, networks, virtualization and cloud platforms. Currently in a BTS Cloud Computing at LGK, after four years of Informatique at the same school.",
+      "uptime.sectag": "02 — Background", "uptime.h2": "Education uptime",
+      "uptime.item1.period": "ongoing",
+      "uptime.item1.note": "Deep dive into cloud architecture, system administration, networking and virtualization — from planning to day-to-day operations.",
+      "uptime.item2.period": "4 years — completed",
+      "uptime.item2.note": "Foundational technical education in computer science — the base for the later specialization in cloud and infrastructure.",
+      "services.sectag": "03 — Selected projects", "services.h2": "Services under construction",
+      "svc.titlePlaceholder": "Add project title", "svc.statusDev": "in development",
+      "svc.descPlaceholder": "Short description: what the project does, what problem it solves, and the context it was built in.",
+      "svc.tool": "Tool", "svc.linkDetails": "Details →", "svc.linkSource": "Source code ↗",
+      "stack.sectag": "04 — Skills & tools", "stack.h2": "Stack",
+      "stack.cloud": "Cloud", "stack.systems": "Systems", "stack.network": "Network", "stack.automation": "Automation", "stack.languages": "Languages",
+      "stack.spoken.de": "German", "stack.spoken.fr": "French", "stack.spoken.en": "English",
+      "contact.sectag": "05 — Contact", "contact.h2": "Let's talk.",
+      "contact.p": "Open to internships, working-student roles and projects around cloud and network infrastructure. A short message is enough.",
+      "footer.hosted": "Hosted on GitHub Pages"
+    }
+  };
 
-            <!-- Terminal Input Form -->
-            <form id="terminal-form" class="bg-slate-900/60 p-3 border-t border-slate-800/80 flex items-center space-x-2">
-                <span class="text-emerald-400 font-bold pl-2">&gt;</span>
-                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" 
-                       class="bg-transparent flex-1 text-white focus:outline-none text-sm code-font" 
-                       placeholder="Befehl eingeben (z.B. help, fetch, skills)...">
-                <button type="submit" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded transition-colors">
-                    Run
-                </button>
-            </form>
-        </div>
-    </section>
+  function safeGet(key){ try{ return localStorage.getItem(key); }catch(e){ return null; } }
+  function safeSet(key, val){ try{ localStorage.setItem(key, val); }catch(e){} }
 
-    <section id="contact" class="py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center space-y-8">
-        <div class="space-y-3">
-            <span class="text-sky-400 code-font text-sm uppercase tracking-wider">Wie du mich erreichst</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Lass uns in Kontakt treten!</h2>
-            <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
-                Egal ob Fragen zum BTS Cloud Computing, Projektanfragen oder professionelle Vernetzung – ich freue mich über jede Nachricht.
-            </p>
-        </div>
+  function applyLang(lang){
+    if(!translations[lang]) lang = 'de';
+    document.documentElement.lang = lang;
+    var dict = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(dict[key]) el.textContent = dict[key];
+    });
+    var descEl = document.querySelector('meta[name="description"]');
+    if(descEl && dict['meta.desc']) descEl.setAttribute('content', dict['meta.desc']);
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    updateThemeLabel();
+    safeSet('lang', lang);
+  }
 
-        <div class="flex flex-wrap justify-center items-center gap-4">
-            <!-- Email Action Button -->
-            <a href="mailto:deivid@example.com" class="px-6 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold transition-all shadow-lg shadow-sky-500/20 flex items-center space-x-2 text-sm">
-                <i class="fa-solid fa-envelope"></i>
-                <span>E-Mail Senden</span>
-            </a>
+  function updateThemeLabel(){
+    var theme = document.documentElement.getAttribute('data-theme') || 'light';
+    var lang = document.documentElement.lang || 'de';
+    var dict = translations[lang] || translations.de;
+    var label = document.querySelector('.theme-toggle [data-i18n]');
+    var glyph = document.querySelector('.theme-toggle .glyph');
+    if(label) label.textContent = theme === 'dark' ? dict['theme.toggleLight'] : dict['theme.toggle'];
+    if(glyph) glyph.textContent = theme === 'dark' ? '☀' : '☾';
+  }
 
-            <!-- Copy Email Button -->
-            <button onclick="copyToClipboard('deivid.korac@example.com')" class="px-6 py-3.5 rounded-xl glass-card hover:bg-slate-800 text-white font-mono text-sm transition-all flex items-center space-x-2">
-                <i class="fa-regular fa-copy text-sky-400"></i>
-                <span id="copy-text">Copy Mail</span>
-            </button>
-        </div>
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeLabel();
+    safeSet('theme', theme);
+  }
 
-        <!-- Social Badges -->
-        <div class="pt-8 flex justify-center items-center space-x-6 text-2xl text-gray-400">
-            <a href="https://github.com" target="_blank" class="hover:text-sky-400 transition-colors" title="GitHub">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://linkedin.com" target="_blank" class="hover:text-sky-400 transition-colors" title="LinkedIn">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <a href="https://discord.com" target="_blank" class="hover:text-sky-400 transition-colors" title="Discord">
-                <i class="fa-brands fa-discord"></i>
-            </a>
-        </div>
-    </section>
+  var savedLang = safeGet('lang') || 'de';
+  var savedTheme = safeGet('theme');
+  if(!savedTheme){
+    savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
 
-    <footer class="border-t border-slate-800/80 py-8 px-4 text-center text-xs text-gray-500 code-font">
-        <p>Entwickelt von Deivid Korac • BTS Cloud Computing & LGK Techniker</p>
-        <p class="mt-2 text-slate-600">Erstellt für GitHub Pages Repository</p>
-    </footer>
+  applyTheme(savedTheme);
+  applyLang(savedLang);
 
-    <script>
-        // Typing Effect Script
-        const typingPhrases = [
-            "19 Jahre alt aus Luxemburg",
-            "BTS Cloud Computing (1. Jahr)",
-            "4 Jahre LGK Informatiktechniker",
-            "Linux & Cloud Infrastructure Enthusiast"
-        ];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typedTextSpan = document.getElementById("typed-text");
+  document.querySelectorAll('.lang-switch button').forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+  });
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+})();
+</script>
 
-        function typeLoop() {
-            const currentPhrase = typingPhrases[phraseIndex];
-            
-            if (isDeleting) {
-                typedTextSpan.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedTextSpan.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let typeSpeed = isDeleting ? 40 : 80;
-
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                typeSpeed = 2000; // Pause at end
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % typingPhrases.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(typeLoop, typeSpeed);
-        }
-
-        // Skill Tab Filtering
-        function filterSkills(category) {
-            const cards = document.querySelectorAll('.skill-card');
-            const tabs = document.querySelectorAll('.skill-tab');
-
-            tabs.forEach(tab => {
-                tab.classList.remove('bg-sky-500/20', 'text-sky-400', 'border-sky-500/30');
-                tab.classList.add('bg-slate-900', 'text-gray-400', 'border-slate-800');
-            });
-
-            event.currentTarget.classList.remove('bg-slate-900', 'text-gray-400', 'border-slate-800');
-            event.currentTarget.classList.add('bg-sky-500/20', 'text-sky-400', 'border-sky-500/30');
-
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Terminal CLI Script
-        const terminalForm = document.getElementById('terminal-form');
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalBody = document.getElementById('terminal-body');
-
-        const commands = {
-            'help': 'Verfügbare Befehle: <span class="text-sky-400">about</span>, <span class="text-sky-400">education</span>, <span class="text-sky-400">skills</span>, <span class="text-sky-400">fetch</span>, <span class="text-sky-400">contact</span>, <span class="text-sky-400">clear</span>',
-            'about': 'Deivid Korac | 19 Jahre alt | BTS Cloud Student & Ex-LGK Informatiktechniker.',
-            'education': '• 2020-2024: LGK Techniker en Informatique (4 Jahre)<br>• 2024-Present: BTS Cloud Computing (1. Jahr)',
-            'skills': 'Cloud (AWS, Docker) | Systems (Linux, WinServer) | Networks (Cisco, Routing/Switching) | Scripting (Bash, Python)',
-            'contact': 'E-Mail: deivid@example.com | GitHub: github.com',
-            'fetch': `<div class="text-xs text-sky-300 font-mono">
-                      OS: CloudOS x86_64<br>
-                      Host: Deivid Korac Dev Machine<br>
-                      Uptime: 19 Years<br>
-                      Education: BTS Cloud Computing (1st Yr) & LGK Techniker<br>
-                      Shell: bash 5.2.15<br>
-                      Status: Ready for Cloud Projects
-                      </div>`
-        };
-
-        terminalForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const cmd = terminalInput.value.trim().toLowerCase();
-            
-            if (!cmd) return;
-
-            // Output command typed
-            const cmdLine = document.createElement('div');
-            cmdLine.innerHTML = `<span class="text-emerald-400 font-bold">deivid@portfolio:~$</span> ${cmd}`;
-            terminalBody.appendChild(cmdLine);
-
-            // Output command result
-            const resLine = document.createElement('div');
-            if (cmd === 'clear') {
-                terminalBody.innerHTML = '';
-            } else if (commands[cmd]) {
-                resLine.innerHTML = commands[cmd];
-                terminalBody.appendChild(resLine);
-            } else {
-                resLine.innerHTML = `<span class="text-red-400">Befehl nicht gefunden: "${cmd}". Tippe <span class="text-sky-400">help</span> für eine Liste.</span>`;
-                terminalBody.appendChild(resLine);
-            }
-
-            terminalInput.value = '';
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        });
-
-        // Copy to clipboard helper
-        function copyToClipboard(text) {
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = text;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-
-            const copyText = document.getElementById("copy-text");
-            copyText.textContent = "Kopiert!";
-            setTimeout(() => {
-                copyText.textContent = "Copy Mail";
-            }, 2000);
-        }
-
-        // Mobile Menu Toggle
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Initialize typing loop on window load
-        window.onload = function() {
-            typeLoop();
-        };
-    </script>
 </body>
 </html>
